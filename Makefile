@@ -6,8 +6,8 @@ LIBSRCH=libhello.h libgoodbye.h
 SOURCES=hello.c
 OBJDIR:=objdir
 OBJS=$(OBJDIR)/hello.o
-LIBS1=libhello.a libgoodbye.a
-LIBSO=$(LIBS1:.a=.o)
+LIBS1=libhello.a libgoodbye.so
+LIBSO=libhello.o libgoodbye.o
 EXECUTABLE=hello
 RM := rm
 
@@ -27,6 +27,9 @@ $(OBJDIR)/%.o:%.c $(LIBSRCH)
 	
 %.o:%.c $(LIBSRCH)
 	$(CC) -I. $(CFLAGS) -c -o $@ $<
+
+%.so:%.o  
+	$(CC) -shared -o $@ $<
 
 %.a:%.o
 	ar rcsv $@ $<
